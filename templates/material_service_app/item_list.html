@@ -1,0 +1,35 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <h1>Items</h1>
+  {% if item_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Unit</th>
+        <th>Count</th>
+        <th>Expiration Date</th>
+        <th>Note</th>
+      </tr>
+    {% for item in item_list %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.unit }}</td>
+        <td>{{ item.count }}</td>
+        <td>{{ item.expiration_date }}</td>
+        <td>
+          {% for note in item_list.note_number.all %}
+            {{ note.id }},
+          {% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+    {% else %}
+      <p>There are no items.</p>
+    {% endif %}
+{% endblock %}

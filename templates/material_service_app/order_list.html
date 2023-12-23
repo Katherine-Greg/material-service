@@ -1,0 +1,35 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <h1>Orders</h1>
+  {% if order_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Created By</th>
+        <th>Created For</th>
+        <th>Items</th>
+        <th>Status</th>
+        <th>Created at</th>
+      </tr>
+    {% for order in order_list %}
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.title }}</td>
+        <td>{{ order.created_by }}</td>
+        <td>{{ order.created_for }}</td>
+        <td>
+          {% for item in order.items.all %}
+            {{ item.name }},
+          {% endfor %}
+        </td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.created_at }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+    {% else %}
+      <p>There are no orders.</p>
+    {% endif %}
+{% endblock %}
