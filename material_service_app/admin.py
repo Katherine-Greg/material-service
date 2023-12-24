@@ -16,7 +16,7 @@ class CustomerAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     add_fieldsets = (
         (None, {"fields": ("username", "password1", "password2")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "role", "category", "brigade_num")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "role", "brigade_num")}),
     )
 
 

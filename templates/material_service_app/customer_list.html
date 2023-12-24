@@ -1,0 +1,28 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <h1>Customers</h1>
+  {% if customer_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Role</th>
+        <th>Brigade</th>
+        <th>Email</th>
+      </tr>
+    {% for customer in customer_list %}
+      <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.first_name }}</td>
+        <td>{{ customer.last_name }}</td>
+        <td>{{ customer.role }}</td>
+        <td>{{ customer.brigade_num }}</td>
+        <td>{{ customer.email }}</td>
+    {% endfor %}
+    </table>
+    {% else %}
+      <p>There are no users.</p>
+    {% endif %}
+{% endblock %}

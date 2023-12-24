@@ -1,10 +1,17 @@
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 
 from .models import Item, ItemCategory, Order, Customer
-from .forms import RequestForm  # Потрібно створити форму для заявок
+from .forms import RequestForm
 
+# def logout_view(request):
+#     logout(request)
+#     return redirect("index")
+
+# def login_view(request):
 
 def index(request):
     """View function for the home page of the site."""
@@ -21,12 +28,17 @@ def index(request):
     return render(request, "material_service_app/index.html", context=context)
 
 
-class ItemListView(generic.ListView):
+class ItemListView(LoginRequiredMixin, generic.ListView):
     model = Item
     paginate_by = 5
 
 
-class OrderListView(generic.ListView):
+class CustomerListView(LoginRequiredMixin, generic.ListView):
+    model = Customer
+    paginate_by = 5
+
+
+class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
     paginate_by = 5
 
