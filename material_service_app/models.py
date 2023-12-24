@@ -7,14 +7,14 @@ class ItemCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Unit(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Note(models.Model):
@@ -22,16 +22,7 @@ class Note(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.name
-
-
-class CustomerCategory(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    item_expiration_date = models.IntegerField(null=True, blank=True)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Item(models.Model):
@@ -40,10 +31,10 @@ class Item(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name="item")
     count = models.IntegerField()
     note_number = models.ManyToManyField(Note, related_name="item")
-    # expiration_date = models.ForeignKey(CustomerCategory, on_delete=models.CASCADE, related_name="item")
+    term_of_use = models.CharField(max_length=50, default="Строк служби")
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Customer(AbstractUser):
@@ -59,8 +50,7 @@ class Customer(AbstractUser):
     ]
     username = models.CharField(max_length=50, unique=True)
     role = models.CharField(max_length=2, choices=ROLE_CHOICES, default=SOLDIER)
-    category = models.ForeignKey(CustomerCategory, on_delete=models.CASCADE, related_name="customer")
-    brigade_num = models.IntegerField()
+    brigade_num = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -86,3 +76,6 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Request {self.title} by {self.created_by}"
+
+    def get_products(self):
+        return Order.objects.filter(created_for=self.id)

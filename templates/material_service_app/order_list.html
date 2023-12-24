@@ -1,7 +1,15 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>Orders</h1>
+  <h1>Orders
+    {% if user.role == 'BR' %}
+     <a href="{% url 'material_service_app:order-create' %}" class="btn btn-primary link-to-page">
+      Create
+     </a>
+     <a href="{% url 'material_service_app:order-download' %}" class="btn btn-primary link-to-page">
+      Download
+     </a>
+  {% endif %}</h1>
   {% if order_list %}
     <table class="table">
       <tr>
@@ -18,10 +26,14 @@
         <td>{{ order.id }}</td>
         <td>{{ order.title }}</td>
         <td>{{ order.created_by }}</td>
-        <td>{{ order.created_for }}</td>
+        <td>
+          {% for customer in order.created_for.all %}
+            <p>{{ customer.first_name }} {{ customer.last_name }}</p>
+          {% endfor %}
+        </td>
         <td>
           {% for item in order.items.all %}
-            {{ item.name }},
+            <p>{{ item.name }}</p>
           {% endfor %}
         </td>
         <td>{{ order.status }}</td>

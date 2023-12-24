@@ -7,7 +7,6 @@ from material_service_app.models import (ItemCategory,
                                          Unit,
                                          Customer,
                                          Order,
-                                         CustomerCategory,
                                          Note)
 
 
@@ -16,7 +15,7 @@ class CustomerAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     add_fieldsets = (
         (None, {"fields": ("username", "password1", "password2")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "role", "category", "brigade_num")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "role", "brigade_num")}),
     )
 
 
@@ -29,5 +28,4 @@ class SubjectAdmin(admin.ModelAdmin):
 admin.site.register(ItemCategory)
 admin.site.register(Unit)
 admin.site.register(Order)
-admin.site.register(CustomerCategory)
 admin.site.register(Note)

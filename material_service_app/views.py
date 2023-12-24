@@ -1,9 +1,14 @@
-from django.shortcuts import render, redirect
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.views import generic
 
-from .models import Item, ItemCategory, Order, Customer
-from .forms import RequestForm  # Потрібно створити форму для заявок
+from .models import Item, Order, Customer
+from .forms import OrderForm
 
 
 def index(request):
@@ -12,45 +17,73 @@ def index(request):
     num_customers = Customer.objects.count()
     num_subjects = Item.objects.count()
 
-
     context = {
         "num_customers": num_customers,
         "num_subjects": num_subjects,
     }
-
     return render(request, "material_service_app/index.html", context=context)
 
 
-class ItemListView(generic.ListView):
+class ItemListView(LoginRequiredMixin, generic.ListView):
     model = Item
     paginate_by = 5
 
 
-class OrderListView(generic.ListView):
+class CustomerListView(LoginRequiredMixin, generic.ListView):
+    model = Customer
+    paginate_by = 5
+
+
+class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
     paginate_by = 5
 
 
-# @login_required
-# def order_list(request):
-#     user = request.user
-#     if user.role == 'BR':
-#         # Якщо користувач - бригадир, показати його заявки
-#         requests = user.created_requests.all()
-#     else:
-#         # Якщо користувач - солдат, показати заявки для нього
-#         requests = user.requests_for.all()
-#
-#     return render(request, 'order_list.html', {'orders': requests})
-
-# @login_required
+@login_required
 def create_order(request):
-    form = RequestForm(request.POST or None)
-    if form.is_valid():
-        new_request = form.save(commit=False)
-        new_request.created_by = request.user
-        new_request.save()
-        form.save_m2m()  # Зберегти M2M поля (items, created_for)
-        return redirect('request_list')
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.created_by = request.user
+            order.save()
+            form.save_m2m()
+            return redirect("/orders")
+    else:
+        form = OrderForm()
+    
+    return render(request, "material_service_app/order_create.html", {"form": form})
 
-    return render(request, 'create_request.html', {'form': form})
+
+def order_to_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="orders.pdf"'
+
+    pdf = canvas.Canvas(response)
+    pdfmetrics.registerFont(TTFont('Arial', 'Arial.ttf'))  # Путь к шрифту Arial.ttf
+    pdf.setFont("Arial", 12)
+    orders = Order.objects.all()
+
+    y_coordinate = 800
+
+    for order in orders:
+        pdf.drawString(100, y_coordinate, u"Order Title: {0}".format(order.title))
+        pdf.drawString(100, y_coordinate - 20, u"Status: {0}".format(order.status))
+        pdf.drawString(100, y_coordinate - 40, u"Created By: {0}".format(order.created_by))
+
+        created_for = ', '.join(str(i) for i in order.created_for.all())
+        items = u', '.join(u"{0}".format(item.name) for item in order.items.all())
+
+        pdf.drawString(100, y_coordinate - 60, u"Created For: {0}".format(created_for))
+        pdf.drawString(100, y_coordinate - 80, u"Items: {0}".format(items))
+
+        pdf.drawString(100, y_coordinate - 100, u"Created At: {0}".format(order.created_at))
+
+        y_coordinate -= 200
+
+        if y_coordinate <= 100:
+            pdf.showPage()
+            y_coordinate = 800
+
+    pdf.save()
+    return response
