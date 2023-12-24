@@ -7,7 +7,6 @@ from material_service_app.models import (ItemCategory,
                                          Unit,
                                          Customer,
                                          Order,
-                                         CustomerCategory,
                                          Note)
 
 
@@ -29,5 +28,4 @@ class SubjectAdmin(admin.ModelAdmin):
 admin.site.register(ItemCategory)
 admin.site.register(Unit)
 admin.site.register(Order)
-admin.site.register(CustomerCategory)
 admin.site.register(Note)
