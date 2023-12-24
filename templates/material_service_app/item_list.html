@@ -22,7 +22,7 @@
         <td>{{ item.count }}</td>
         <td>{{ item.term_of_use }}</td>
         <td>
-          {% for note in item_list.note_number.all %}
+          {% for note in item.note_number.all %}
             {{ note.id }},
           {% endfor %}
         </td>
