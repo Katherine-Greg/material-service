@@ -1,12 +1,20 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>Material Service</h1>
-  <h2>Welcome to Best Material Service!</h2>
-
-  <ul>
-    <li><strong>num_customers:</strong> {{ num_customers }}</li>
-    <li><strong>num_subjects:</strong> {{ num_subjects }}</li>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="margin-bottom: 50px;text-align: center;">Речова служба</h1>
+                <div class="col text-center">
+                    <img style="margin-bottom: 50px" src="https://kor.ill.in.ua/m/610x385/2813040.jpg" class="img-fluid mx-auto">
+                </div>
+                <div class="col">
+                    <h6>Забезпечення окремого батальйону речовим майном здійснюється на підставі поданої «Звіт-заявки» до речової служби бригади. «Звіт-заявка» має єдиний затверджений зразок та є обов’язковим документом для речової служби військової частини, за яким вона отримує майно впродовж року та звітує перед керівним органом забезпечення наприкінці звітного періоду в кінці кожного року (окремий батальйон перед бригадою, бригада перед оперативним центром забезпечення (ОЦЗ)). «Звіт-заявка» відображає потребу військової частини у забезпеченні речовим майном. Перед оформленням та поданням «Звіт-заявки», речова служба військової частини проводить списання речового майна з обліку, строк експлуатації якого закінчився.</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+  <ul style="position: absolute; bottom: 0;">
+    <li><strong>Зареєстрованих користувачів:</strong> {{ num_customers }}</li>
   </ul>
-
 {% endblock %}
