@@ -1,19 +1,22 @@
 {% load crispy_forms_filters %}
 
-<ul class="sidebar-nav list-group">
+<ul class="sidebar-nav list-group ">
   {% if user.is_authenticated %}
-    <li class="list-group-item">User: {{ user.get_username }}</li>
+    <li class="list-group-item user-info">User: {{ user.get_username }}</li>
+      <li class="list-group-item page-link"><a href="{% url 'material_service_app:index' %}">Домашня сторінка</a></li>
+      <li class="list-group-item page-link"><a href="{% url 'material_service_app:customer-list' %}">Всі користувачі</a></li>
+      <li class="list-group-item page-link"><a href="{% url 'material_service_app:item-list' %}">Предмети в наявності</a></li>
+      <li class="list-group-item page-link"><a href="{% url 'material_service_app:order-list' %}">Створені Звіт-заявки</a></li>
+      <li class="list-group-item page-link">
     <form method="post" action="{% url 'logout' %}">
       {% csrf_token %}
-      <button type="submit" class="btn btn-secondary">logout</button>
+      <button  type="submit" class="btn btn-link logout-btn">Log out</button>
     </form>
+      </li>
   {% else %}
-    <li class="list-group-item"><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+    <li class="list-group-item page-link"><a href="{% url 'login' %}?next={{ request.path }}">Log in</a></li>
   {% endif %}
   <br>
 
-  <li class="list-group-item"><a href="{% url 'material_service_app:index' %}">Home</a></li>
-  <li class="list-group-item"><a href="{% url 'material_service_app:customer-list' %}">All Customers</a></li>
-  <li class="list-group-item"><a href="{% url 'material_service_app:item-list' %}">All Items</a></li>
-  <li class="list-group-item"><a href="{% url 'material_service_app:order-list' %}">All Orders</a></li>
+
 </ul>

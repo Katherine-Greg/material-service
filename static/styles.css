@@ -1,8 +1,82 @@
 body {
-    margin-top: 20px;
+    margin-top: 0;
+}
+
+a{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+a:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.user-info{
+    color: white;
+    font-family: 'Poppins', sans-serif;
 }
 
 .link-to-page {
     float: right;
     margin: 0 2px 0 2px;
+}
+
+.list-group-item{
+    background-color: #353935;
+    border: none;
+}
+
+
+.page-link:hover{
+    background-color: #28282B;
+}
+
+.sidebar-back {
+    height: calc(100vh - 150px);
+    background-color: #353935;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.logout{
+    background-color: #353935;
+    text-align: center;
+}
+
+.logging-page{
+    color: black;
+}
+
+.btn-custom{
+    background-color: #28282B;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+.btn-custom:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.btn-link{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+.btn-link:hover{
+    text-decoration: none;
+    color: white;
+}
+.logout-btn{
+    padding: 0;
+}
+.user-info{
+    background-color: #28282B;
+}
+.header{
+    padding-left: 15px;
+    height: 150px;
+    background-image: url("tuxpi.com.1703586717.jpg");
+}
+.col-md-6{
+    margin-top: 100px;
+    text-align: center;
 }

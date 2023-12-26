@@ -1,18 +1,21 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>Customers</h1>
+  <h1 style="margin-bottom: 30px">Користувачі</h1>
   {% if customer_list %}
     <table class="table">
+    <thead class="thead-dark">
       <tr>
-        <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Role</th>
-        <th>Brigade</th>
-        <th>Email</th>
+        <th scope="col">ID</th>
+        <th scope="col">Ім'я</th>
+        <th scope="col">Прізвище</th>
+        <th scope="col">Звання</th>
+        <th scope="col">Військова Частина</th>
+        <th scope="col">Email</th>
       </tr>
+      </thead>
     {% for customer in customer_list %}
+        <tbody>
       <tr>
         <td>{{ customer.id }}</td>
         <td>{{ customer.first_name }}</td>
@@ -20,6 +23,7 @@
         <td>{{ customer.role }}</td>
         <td>{{ customer.brigade_num }}</td>
         <td>{{ customer.email }}</td>
+        </tbody>
     {% endfor %}
     </table>
     {% else %}

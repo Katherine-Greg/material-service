@@ -1,19 +1,22 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>Items</h1>
+  <h1 style="margin-bottom: 30px">Речі в наявності</h1>
   {% if item_list %}
     <table class="table">
+    <thead class="thead-dark">
       <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Unit</th>
-        <th>Count</th>
-        <th>Expiration Date</th>
-        <th>Note</th>
+        <th scope="col">Назва</th>
+        <th scope="col">Категорія</th>
+        <th scope="col">Одиниця</th>
+        <th scope="col">Кількість</th>
+        <th scope="col">Дата закінчення терміну </th>
+        <th scope="col">Замітка</th>
       </tr>
+      </thead>
     {% for item in item_list %}
+        <tbody>
       <tr>
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
@@ -27,6 +30,7 @@
           {% endfor %}
         </td>
       </tr>
+        </tbody>
     {% endfor %}
     </table>
     {% else %}

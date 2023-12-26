@@ -1,26 +1,30 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>Orders
+
     {% if user.role == 'BR' %}
-     <a href="{% url 'material_service_app:order-create' %}" class="btn btn-primary link-to-page">
-      Create
+     <a href="{% url 'material_service_app:order-create' %}" class="btn btn-custom link-to-page">
+      Створити замовлення
      </a>
-     <a href="{% url 'material_service_app:order-download' %}" class="btn btn-primary link-to-page">
-      Download
+     <a href="{% url 'material_service_app:order-download' %}" class="btn btn-custom link-to-page">
+      Завантажити PDF
      </a>
-  {% endif %}</h1>
+
+  {% endif %}
   {% if order_list %}
     <table class="table">
+    <thead class="thead-dark">
       <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Created By</th>
-        <th>Created For</th>
-        <th>Items</th>
-        <th>Status</th>
-        <th>Created at</th>
+        <th scope="col">ID</th>
+        <th scope="col">Замовлення</th>
+        <th scope="col">Постачальник</th>
+        <th scope="col">Замовник</th>
+        <th scope="col">Речі</th>
+        <th scope="col">Статус замовлення</th>
+        <th scope="col">Замовлення створенно</th>
       </tr>
+      </thead>
+    <tbody>
     {% for order in order_list %}
       <tr>
         <td>{{ order.id }}</td>
@@ -39,9 +43,10 @@
         <td>{{ order.status }}</td>
         <td>{{ order.created_at }}</td>
       </tr>
+        </tbody>
     {% endfor %}
     </table>
     {% else %}
-      <p>There are no orders.</p>
+      <p>Замовлень не знайдено. Створіть нове за потреби</p>
     {% endif %}
 {% endblock %}

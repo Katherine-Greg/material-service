@@ -1,10 +1,10 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-<form method="POST">
+<form method="POST" class="form-group">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" value="Create Order">
+  <input type="submit" class="btn btn-custom" value="Створити замовлення">
 </form>
-
 {% endblock %}
+
